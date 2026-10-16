@@ -13,9 +13,8 @@ The landing page uses a deliberately lean stack — no TypeScript, no CSS framew
 | `next`      | `^15.3.0`  | Framework, App Router, static export                |
 | `react`     | `^19.1.0`  | UI library                                          |
 | `react-dom` | `^19.1.0`  | DOM renderer                                        |
-| `serve`     | latest     | Preview server for the `out/` directory (via `npx`, no install needed) |
 
-There are no other runtime dependencies. `serve` is invoked through `npx` in the `npm start` script, so it is never written to `node_modules`.
+There are no other runtime dependencies. The `npm start` script runs `npx serve out`, invoking [serve](https://www.npmjs.com/package/serve) via `npx` without installing it — it is not listed in `package.json`.
 
 ## Next.js configuration
 

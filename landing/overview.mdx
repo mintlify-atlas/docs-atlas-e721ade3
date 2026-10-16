@@ -21,11 +21,11 @@ The page is one continuous scroll with nine anchored sections:
 | Controls    | `#controls` | Keyboard reference: WASD / arrows to drive, Space to fire, 1–5 for supplies, Tab for scoreboard   |
 | Mobile      | `#mobile`   | PWA install from the browser, touch controls, no app store required                                 |
 | Gamepad     | `#gamepad`  | Controller and Steam Deck support in the mobile PWA                                                 |
-| Final CTA   | `#play`     | One-line summary of the whole game, Play button                                                     |
+| Play        | `#play`     | One-line summary of the whole game, Play button                                                     |
 
 ## Project structure
 
-```
+```text
 /
 ├── app/
 │   ├── layout.jsx      # Root layout, font setup, metadata & Open Graph
@@ -45,7 +45,7 @@ Every page section lives in `app/page.jsx` as a `<section id="...">` block with 
 
 Every **Play** and **Install Now** button on the page — in the nav bar, the Hero section, the Mobile section, and the Final CTA — links to:
 
-```
+```text
 https://mobile.skilltanki.workers.dev/
 ```
 
@@ -53,4 +53,4 @@ This is the live game URL. Changing it means updating each `<a href="...">` occu
 
 ## Next step
 
-<Card title="Run it locally" href="landing/getting-started" />
+<Card title="Run it locally" icon="terminal" href="/landing/getting-started" />

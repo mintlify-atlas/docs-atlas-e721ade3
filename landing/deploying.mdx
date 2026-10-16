@@ -1,5 +1,5 @@
 ---
-title: "Deploy the SkillTanki Landing Page"
+title: "Deploy the SkillTanki Landing Page to a Static Host"
 sidebarTitle: "Deploying"
 description: "Build the static site with npm run build, then deploy the out/ directory to GitHub Pages, Cloudflare Pages, Netlify, or any static file host."
 ---
@@ -17,11 +17,13 @@ Next.js compiles the app and writes all output to the `out/` directory: an `inde
 The build is configured in `next.config.mjs`:
 
 ```js next.config.mjs
+/** @type {import('next').NextConfig} */
 const nextConfig = {
   output: 'export',
   trailingSlash: true,
   images: { unoptimized: true },
 };
+export default nextConfig;
 ```
 
 | Option                  | Effect |
