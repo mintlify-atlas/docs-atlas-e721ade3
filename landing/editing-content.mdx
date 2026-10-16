@@ -1,0 +1,75 @@
+---
+title: "Edit the SkillTanki Landing Page Content"
+sidebarTitle: "Editing Content"
+description: "All page copy lives in app/page.jsx, metadata in app/layout.jsx, colours in app/globals.css — no build step needed to edit text."
+---
+
+Every part of the landing page is in one of three files. The structure is intentionally flat — there are no separate data files, CMS integrations, or component libraries to navigate. Find the file for what you want to change, edit it, and the dev server will hot-reload instantly.
+
+## Copy and sections
+
+All visible text and layout live in `app/page.jsx`. Each section of the page is a `<section id="...">` block styled with inline styles. To change any text, find the relevant section by its `id` attribute and edit the JSX directly.
+
+The page defines the following section IDs in order:
+
+| ID          | Content |
+| ----------- | ------- |
+| `#top`      | Hero: headline, pitch, Play button, key numbers (7 hulls, 9 turrets, 101 paints, 91 maps) |
+| `#why`      | Why it exists: pain points the game solves |
+| `#modes`    | Game modes: Deathmatch, Team Deathmatch, Capture the Flag, Assault, Explore Map |
+| `#tanks`    | Seven hulls (Wasp to Mammoth) and nine turrets (Smoky to Shaft) |
+| `#maps`     | 91 battlefields and 101 paints |
+| `#controls` | Keyboard-only layout: WASD / arrows, Space, 1–5, Tab |
+| `#mobile`   | Installable PWA with touch controls |
+| `#gamepad`  | Controller and Steam Deck support |
+| `#play`     | Final call-to-action with one-line summary |
+
+## Page metadata
+
+Metadata is controlled by the `metadata` export in `app/layout.jsx`. This object sets the browser tab title, the description shown in search results, and the Open Graph tags used when the page is shared on social media.
+
+```jsx app/layout.jsx
+export const metadata = {
+  title: 'SkillTanki — 2010-era tanks, the way you remember them',
+  description: 'A free browser tank arcade in the spirit of the 2010 classic. No registration, no pay-to-win: 7 hulls, 9 turrets, 101 paints, 91 maps.',
+  openGraph: { title: 'SkillTanki', description: 'Free browser tank arcade. No sign-up, no pay-to-win.', images: ['assets/art-2.webp'] },
+};
+```
+
+Edit any of these fields to update what search engines and link-preview cards display.
+
+## Images
+
+Images are stored in `public/assets/` and served as static files.
+
+- **Adding or replacing images** — drop the new file into `public/assets/` and reference it with a relative path such as `assets/filename.webp` (no leading slash).
+- **Image optimization is disabled** — `unoptimized: true` is set in `next.config.mjs`, so Next.js serves files exactly as committed with no resizing or format conversion.
+- **Prefer `.webp`** for screenshots and artwork to keep file sizes small while maintaining quality.
+
+<Tip>
+  The `art-2.webp` image is used as the Open Graph image for social sharing previews. Update the `openGraph.images` array in `app/layout.jsx` if you replace the hero background.
+</Tip>
+
+## Colours and hover effects
+
+Global colours and hover effects are defined in `app/globals.css`. The dark palette uses `#0b0d0a` as the page background and `#8fdc8f` as the accent green. The `globals.css` file also sets the base font and provides hover rules for the `.navlink` and `.btn` classes used throughout the page.
+
+```css app/globals.css
+html{scroll-behavior:smooth}
+body{margin:0;background:#0b0d0a;color:#c3c9bb;font-family:Verdana,Geneva,"DejaVu Sans",sans-serif;-webkit-font-smoothing:antialiased}
+a{color:#8fdc8f}
+a:hover{color:#b9f0b9}
+img{max-width:100%}
+.navlink:hover{color:#8fdc8f !important}
+.btn{transition:filter .15s,transform .15s}
+.btn:hover{filter:brightness(1.12);transform:translateY(-1px)}
+.btn:active{transform:translateY(1px)}
+```
+
+<Note>
+  The accent green appears in two slightly different values across the codebase: `#8fdc8f` (globals.css and most inline styles) and `#8ee07c` (the hero Play button gradient). Both are visually identical at typical display brightness.
+</Note>
+
+## The Play button URL
+
+All Play buttons — in the navbar, hero section, mobile section, and final call-to-action — link to `https://mobile.skilltanki.workers.dev/`. If you fork the project and host your own game instance, search `app/page.jsx` for all occurrences of this URL and replace them with your own game's address.

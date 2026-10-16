@@ -1,0 +1,83 @@
+---
+title: "Deploy the SkillTanki Landing Page"
+sidebarTitle: "Deploying"
+description: "Build the static site with npm run build, then deploy the out/ directory to GitHub Pages, Cloudflare Pages, Netlify, or any static file host."
+---
+
+The landing page builds to a fully static `out/` directory. It can be deployed to any static file host with no server-side runtime — no Node.js process, no database, no environment variables.
+
+## Build the static export
+
+```bash
+npm run build
+```
+
+Next.js compiles the app and writes all output to the `out/` directory: an `index.html` entry point, pre-rendered HTML for every route, and all CSS and JS assets under `out/_next/`.
+
+The build is configured in `next.config.mjs`:
+
+```js next.config.mjs
+const nextConfig = {
+  output: 'export',
+  trailingSlash: true,
+  images: { unoptimized: true },
+};
+```
+
+| Option                  | Effect |
+| ----------------------- | ------ |
+| `output: 'export'`      | Tells Next.js to emit a fully static site instead of a Node.js server. |
+| `trailingSlash: true`   | Writes `page/index.html` instead of `page.html`, matching the expected URL shape on most static hosts. |
+| `images.unoptimized: true` | Skips Next.js image optimisation — files are served exactly as committed. |
+
+## GitHub Pages
+
+<Steps>
+  <Step title="Run the build">
+    ```bash
+    npm run build
+    ```
+  </Step>
+  <Step title="Commit and push the out/ directory">
+    Commit `out/` to your repository (or configure a CI/CD workflow to build and publish automatically on every push).
+  </Step>
+  <Step title="Configure Pages in repository settings">
+    Go to **Settings → Pages** and set the source to the branch and folder that contains the `out/` directory.
+  </Step>
+  <Step title="Verify the site loads correctly">
+    Navigate to your GitHub Pages URL. All routes and assets under `_next/` should load without 404s.
+  </Step>
+</Steps>
+
+<Note>
+  The `public/.nojekyll` file is critical for GitHub Pages. Without it, GitHub Pages' Jekyll processor ignores directories starting with underscore — including `_next/` — breaking the site. Next.js copies `public/.nojekyll` to `out/.nojekyll` automatically during `npm run build`.
+</Note>
+
+## Other static hosts
+
+**Cloudflare Pages**
+
+Connect your repository in the Cloudflare Pages dashboard, then set:
+- **Build command:** `npm run build`
+- **Output directory:** `out`
+
+Cloudflare Pages will run the build on every push and deploy the result automatically.
+
+**Netlify**
+
+In your Netlify site settings (or a `netlify.toml` file), set:
+- **Build command:** `npm run build`
+- **Publish directory:** `out`
+
+**Any static server (nginx, Apache, serve)**
+
+Copy or point the server root at the `out/` directory. The entry point is `out/index.html`. No rewrite rules are needed — `trailingSlash: true` ensures every page is a real `index.html` file at its own path.
+
+## Environment notes
+
+- **No environment variables required** — the landing page is purely static and contains no server-side logic or secrets.
+- **The game URL is hardcoded** — `https://mobile.skilltanki.workers.dev/` appears directly in `app/page.jsx`. If you fork the project and host your own game instance, update all occurrences of this URL before building.
+
+<Tip>
+  For fastest deploys, set up a CI/CD workflow (GitHub Actions, Cloudflare Pages auto-deploy) that runs `npm run build` on every push to `main`.
+</Tip>

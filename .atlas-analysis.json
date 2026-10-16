@@ -1,0 +1,86 @@
+{
+  "projectType": "saas",
+  "projectName": "SkillTanki",
+  "projectDescription": "A free browser tank arcade inspired by the 2010 classic — no registration, no pay-to-win, playable instantly in any browser with 7 hulls, 9 turrets, 101 paints, and 91 maps.",
+  "theme": "almond",
+  "primaryColor": "#8ee07c",
+  "lightColor": "#545249",
+  "darkColor": "#c4b5a7",
+  "navigation": {
+    "tabs": [
+      {
+        "tab": "Game Guide",
+        "groups": [
+          {
+            "group": "Get Started",
+            "pages": [
+              "introduction",
+              "getting-started",
+              "controls"
+            ]
+          },
+          {
+            "group": "Gameplay",
+            "pages": [
+              "game-modes",
+              "tanks-hulls",
+              "turrets",
+              "supplies",
+              "maps-paints"
+            ]
+          },
+          {
+            "group": "Platforms",
+            "pages": [
+              "mobile-pwa",
+              "gamepad"
+            ]
+          }
+        ]
+      },
+      {
+        "tab": "Landing Page",
+        "groups": [
+          {
+            "group": "Overview",
+            "pages": [
+              "landing/overview",
+              "landing/tech-stack"
+            ]
+          },
+          {
+            "group": "Development",
+            "pages": [
+              "landing/getting-started",
+              "landing/editing-content",
+              "landing/deploying"
+            ]
+          }
+        ]
+      }
+    ]
+  },
+  "keyFeatures": [
+    "No registration — pick a call sign and start playing immediately",
+    "No pay-to-win — all supplies are free, infinite, and equal for every player",
+    "7 hulls (Wasp to Mammoth) and 9 distinct turrets, all unlocked from the first second",
+    "91 battlefields including summer and winter variants, plus a built-in map editor",
+    "101 purely cosmetic paints with no gameplay effect",
+    "5 game modes: Deathmatch, Team Deathmatch, Capture the Flag, Assault, Explore Map",
+    "Public and private (password-protected) rooms",
+    "Progressive Web App — installs on mobile without an app store",
+    "Gamepad support including Steam Deck",
+    "Server-side outcome verification to prevent cheating",
+    "Static Next.js 15 landing page exportable to GitHub Pages or any static host"
+  ],
+  "publicApiSurface": [
+    "Game URL: https://mobile.skilltanki.workers.dev/",
+    "Landing page sections: #top, #why, #modes, #tanks, #maps, #controls, #mobile, #gamepad, #play",
+    "npm scripts: dev, build, start",
+    "Next.js config: output: 'export', trailingSlash: true, images.unoptimized: true",
+    "App Router entry points: app/layout.jsx (metadata, font), app/page.jsx (full landing page)",
+    "CSS variables: --font-russo (Russo One font family)",
+    "Global styles: app/globals.css (dark palette, hover effects)",
+    "Static assets directory: public/assets/ (webp screenshots, logo, icon, supply icons)"
+  ]
+}

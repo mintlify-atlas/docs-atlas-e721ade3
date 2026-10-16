@@ -1,0 +1,67 @@
+---
+title: "Gamepad and Steam Deck Support in SkillTanki"
+sidebarTitle: "Gamepad"
+description: "SkillTanki's mobile PWA supports any standard controller — DualShock, Xbox, Switch Pro, Bluetooth phone pads, and the Steam Deck's built-in controls."
+---
+
+The mobile PWA supports gamepads as a third input method alongside touch and keyboard. Any controller with a standard layout works — connect it over USB or Bluetooth and the game picks it up automatically, with nothing to configure.
+
+## Supported controllers
+
+<CardGroup cols={2}>
+  <Card title="PlayStation" icon="gamepad">
+    DualShock 4 and DualSense — USB or Bluetooth
+  </Card>
+  <Card title="Xbox controllers" icon="gamepad">
+    All standard Xbox controllers — USB or Bluetooth
+  </Card>
+  <Card title="Switch Pro Controller" icon="gamepad">
+    Nintendo Switch Pro Controller — USB or Bluetooth
+  </Card>
+  <Card title="Bluetooth phone pads" icon="gamepad">
+    Most standard-layout Bluetooth gamepads designed for mobile
+  </Card>
+  <Card title="Steam Deck" icon="gamepad">
+    Built-in controls work out of the box — no extra setup needed
+  </Card>
+</CardGroup>
+
+## Connecting
+
+<Steps>
+  <Step title="Connect your controller">
+    Plug in via USB, or pair via Bluetooth in your device's system settings.
+  </Step>
+  <Step title="Open SkillTanki in the mobile PWA">
+    Navigate to [https://mobile.skilltanki.workers.dev/](https://mobile.skilltanki.workers.dev/) or launch the installed PWA from your home screen.
+  </Step>
+  <Step title="Start playing">
+    The game automatically detects the first connected controller. No in-game configuration screen, no button remapping required — just pick up and play.
+  </Step>
+</Steps>
+
+<Note>
+  Nothing to configure. The game picks up the first connected controller automatically.
+</Note>
+
+## How inputs interact
+
+All three input methods — touch, keyboard, and gamepad — work simultaneously, and the game switches between them fluidly:
+
+- **Touch the controller:** on-screen buttons fade away so they don't clutter the display
+- **Touch the screen:** on-screen buttons reappear immediately
+- **In menus:** D-pad and left stick move focus between options; **✕** confirms, **○** cancels — just like a standard controller UI
+
+You can start a session on touch and pick up a controller mid-game, or use touch to navigate menus and a gamepad to play — everything works together without any mode switching.
+
+## Steam Deck notes
+
+The Steam Deck's built-in controls map directly to the standard gamepad layout, so the game works without any special configuration:
+
+- The built-in controls map to the standard gamepad layout automatically
+- Play in **Desktop Mode** inside the browser, or install the PWA for a cleaner, full-screen experience
+- No special configuration or community controller layout is needed
+
+<Tip>
+  For the best Steam Deck experience, install the PWA from the browser and add it to your Steam library as a non-Steam game.
+</Tip>

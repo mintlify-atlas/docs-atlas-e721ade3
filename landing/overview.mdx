@@ -1,0 +1,56 @@
+---
+title: "SkillTanki Landing Page: Architecture Overview"
+sidebarTitle: "Overview"
+description: "The SkillTanki landing page is a single-file Next.js 15 static export with nine anchored sections, deployable to GitHub Pages or any static host."
+---
+
+The landing page is a single scrolling layout built with Next.js 15. At build time it is exported to plain HTML, CSS, and JS — no server required. The result can be hosted on GitHub Pages, any CDN, or any static file server without further configuration.
+
+## Page sections
+
+The page is one continuous scroll with nine anchored sections:
+
+| Section     | Anchor      | Content summary                                                                                     |
+| ----------- | ----------- | --------------------------------------------------------------------------------------------------- |
+| Hero        | `#top`      | Headline, pitch, Play button, key numbers (7 hulls, 9 turrets, 101 paints, 91 maps)                |
+| Why         | `#why`      | Eight pain points the game solves: lost Flash game, pay-to-win, grind, accounts, no place to play with friends, community maps lost, unfair wins, the game no longer exists anywhere |
+| Modes       | `#modes`    | Five game modes — Deathmatch, Team Deathmatch, Capture the Flag, Assault, Explore Map — plus public and private password-protected rooms |
+| Tanks       | `#tanks`    | Seven hulls (Wasp → Mammoth) and nine turrets (Smoky → Shaft), each described individually         |
+| Maps        | `#maps`     | 91 battlefields: 53 summer maps and 38 winter variants                                              |
+| Paints      | *(none)*    | 101 cosmetic paints — pure self-expression, no effect on armour                                     |
+| Controls    | `#controls` | Keyboard reference: WASD / arrows to drive, Space to fire, 1–5 for supplies, Tab for scoreboard   |
+| Mobile      | `#mobile`   | PWA install from the browser, touch controls, no app store required                                 |
+| Gamepad     | `#gamepad`  | Controller and Steam Deck support in the mobile PWA                                                 |
+| Final CTA   | `#play`     | One-line summary of the whole game, Play button                                                     |
+
+## Project structure
+
+```
+/
+├── app/
+│   ├── layout.jsx      # Root layout, font setup, metadata & Open Graph
+│   ├── page.jsx         # The entire landing page
+│   └── globals.css      # Global resets and hover styles
+├── public/
+│   ├── .nojekyll        # Lets GitHub Pages serve _next/
+│   └── assets/          # Screenshots, artwork, logo, icon, supply icons
+├── jsconfig.json        # baseUrl for absolute imports
+├── next.config.mjs      # static export, trailingSlash, unoptimized images
+└── package.json
+```
+
+Every page section lives in `app/page.jsx` as a `<section id="...">` block with inline styles. There are no separate component files — the entire page is one export.
+
+## The Play button
+
+Every **Play** and **Install Now** button on the page — in the nav bar, the Hero section, the Mobile section, and the Final CTA — links to:
+
+```
+https://mobile.skilltanki.workers.dev/
+```
+
+This is the live game URL. Changing it means updating each `<a href="...">` occurrence inside `app/page.jsx`.
+
+## Next step
+
+<Card title="Run it locally" href="landing/getting-started" />

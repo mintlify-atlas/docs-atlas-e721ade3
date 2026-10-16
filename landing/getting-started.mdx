@@ -1,0 +1,81 @@
+---
+title: "Run the SkillTanki Landing Page Locally"
+sidebarTitle: "Local Dev"
+description: "Clone the repo, install dependencies with npm, and start a hot-reload dev server at localhost:3000 — requires Node.js 18.18 or newer."
+---
+
+The landing page is a Next.js 15 app. Running it locally gives you a hot-reload dev server — every file change is reflected in the browser instantly without a manual refresh.
+
+## Prerequisites
+
+- **Node.js 18.18 or newer** — required by Next.js 15
+- **npm** — included with Node.js
+
+<Info>
+  The project has no TypeScript, no CSS framework, and no native addons — `npm install` completes in seconds.
+</Info>
+
+## Install and run
+
+<Steps>
+  <Step title="Clone the repository">
+    ```bash
+    git clone https://github.com/skilltanki/landing.git && cd landing
+    ```
+  </Step>
+  <Step title="Install dependencies">
+    ```bash
+    npm install
+    ```
+  </Step>
+  <Step title="Start the dev server">
+    ```bash
+    npm run dev
+    ```
+  </Step>
+  <Step title="Open the page in your browser">
+    Navigate to [http://localhost:3000](http://localhost:3000). The page reloads automatically as you edit files.
+  </Step>
+</Steps>
+
+### Available scripts
+
+```json package.json scripts
+{
+  "dev": "next dev",
+  "build": "next build",
+  "start": "npx serve out"
+}
+```
+
+| Script  | What it does |
+| ------- | ------------ |
+| `dev`   | Starts the Next.js dev server with hot module replacement at `localhost:3000`. |
+| `build` | Runs `next build` with `output: 'export'`, writing the fully static site to `out/`. |
+| `start` | Serves the `out/` directory with `serve` for a local preview of the production build. |
+
+## Building for production
+
+To produce the deployable static site, run:
+
+```bash
+npm run build
+```
+
+Next.js compiles the app and writes the fully static output to the `out/` directory. No server is needed to host the result — every file inside `out/` is plain HTML, CSS, or JS.
+
+To preview the exported build locally before deploying:
+
+```bash
+npm start
+```
+
+`npm start` serves the `out/` folder using `serve` via `npx`.
+
+<Note>
+  `npm start` serves the `out/` folder. The live site at [https://mobile.skilltanki.workers.dev/](https://mobile.skilltanki.workers.dev/) is the actual game, not the landing page.
+</Note>
+
+<Card title="Edit content" href="/landing/editing-content">
+  Learn how to change page copy, metadata, images, and colours.
+</Card>

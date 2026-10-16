@@ -1,0 +1,115 @@
+---
+title: "Tech Stack Behind the SkillTanki Landing Page"
+sidebarTitle: "Tech Stack"
+description: "Next.js 15 App Router with static export, React 19, Russo One via next/font, inline JSX styles, and zero runtime JavaScript beyond Next's shell."
+---
+
+The landing page uses a deliberately lean stack — no TypeScript, no CSS framework, no runtime JavaScript beyond what Next ships. Everything renders to static HTML at build time; the browser receives a fully formed page with no hydration overhead.
+
+## Dependencies
+
+| Package     | Version    | Role                                                |
+| ----------- | ---------- | --------------------------------------------------- |
+| `next`      | `^15.3.0`  | Framework, App Router, static export                |
+| `react`     | `^19.1.0`  | UI library                                          |
+| `react-dom` | `^19.1.0`  | DOM renderer                                        |
+| `serve`     | latest     | Preview server for the `out/` directory (via `npx`, no install needed) |
+
+There are no other runtime dependencies. `serve` is invoked through `npx` in the `npm start` script, so it is never written to `node_modules`.
+
+## Next.js configuration
+
+The full `next.config.mjs`:
+
+```js
+/** @type {import('next').NextConfig} */
+const nextConfig = {
+  output: 'export',
+  trailingSlash: true,
+  images: { unoptimized: true },
+};
+export default nextConfig;
+```
+
+| Option                   | Effect                                                                                         |
+| ------------------------ | ---------------------------------------------------------------------------------------------- |
+| `output: 'export'`       | Writes static HTML, CSS, and JS to `out/` at build time. No Node server is needed to serve the result. |
+| `trailingSlash: true`    | Generates `page/index.html` instead of `page.html`. Required for GitHub Pages to serve directories correctly without a 404. |
+| `images.unoptimized: true` | Disables Next.js image optimisation. All assets are served exactly as committed — no resize, no format conversion, no server-side processing. |
+
+## Fonts
+
+`app/layout.jsx` imports **Russo One** from Google Fonts via `next/font/google`:
+
+```jsx
+import { Russo_One } from 'next/font/google';
+
+const russo = Russo_One({
+  weight: '400',
+  subsets: ['latin', 'cyrillic'],
+  variable: '--font-russo',
+  display: 'swap',
+});
+```
+
+`next/font` downloads the font files at build time and self-hosts them alongside the static output — no Google Fonts request is made at runtime. The font is exposed as the CSS custom property `--font-russo` and applied to the `<html>` element via the `russo.variable` class. Both `latin` and `cyrillic` subsets are included, so the heading font works for both English and Russian copy. `display: 'swap'` ensures text remains visible while the font loads.
+
+Throughout `page.jsx` the font is referenced as:
+
+```css
+font-family: var(--font-russo), Verdana, sans-serif;
+```
+
+## Styling approach
+
+All layout and visual styles are written as **inline styles directly in JSX** — there is no external CSS framework and no CSS Modules. This keeps every section self-contained: all the styles for a block are visible alongside its markup.
+
+The only global stylesheet is `app/globals.css`, which handles a small set of things that cannot be done with inline styles:
+
+```css
+html{scroll-behavior:smooth}
+body{margin:0;background:#0b0d0a;color:#c3c9bb;font-family:Verdana,Geneva,"DejaVu Sans",sans-serif;-webkit-font-smoothing:antialiased}
+a{color:#8fdc8f}
+a:hover{color:#b9f0b9}
+img{max-width:100%}
+.navlink:hover{color:#8fdc8f !important}
+.btn{transition:filter .15s,transform .15s}
+.btn:hover{filter:brightness(1.12);transform:translateY(-1px)}
+.btn:active{transform:translateY(1px)}
+```
+
+The file covers: smooth scroll on the `<html>` element, body resets, global link colours, hover states for nav links (`.navlink`) and buttons (`.btn`), and a `max-width` guard on images.
+
+## Color palette
+
+The core design tokens used throughout `page.jsx`:
+
+| Hex         | Role              |
+| ----------- | ----------------- |
+| `#0b0d0a`   | Page background   |
+| `#8fdc8f`   | Accent green (primary) |
+| `#8ee07c`   | Accent green (button gradient top) |
+| `#f2f4ee`   | Primary text      |
+| `#c3c9bb`   | Secondary text    |
+| `#aab09f`   | Muted / card body text |
+| `#2a2f26`   | Border color      |
+| `#121510`   | Card background   |
+| `#0e100d`   | Deep card / tag background |
+
+All colours are applied as inline style strings — there is no CSS variables file for the palette. The accent green `#8fdc8f` is also used as the section label colour above every heading.
+
+## No runtime JavaScript
+
+The page has **no client-side JavaScript** beyond Next's minimal shell. There are no `useState` calls, no `useEffect` calls, no event listeners, and no `'use client'` directives anywhere in the codebase.
+
+All visual interactivity is handled entirely by CSS:
+
+- Hover lift and brightness on buttons (`.btn` in `globals.css`)
+- Hover colour on nav links (`.navlink` in `globals.css`)
+- Smooth anchor scrolling (`scroll-behavior: smooth` on `html`)
+
+The horizontal map carousel in the Maps section is a plain CSS `overflow-x: auto` container with `scroll-snap-type: x mandatory` — no JS scroll library is used.
+
+<Info>
+  The `.nojekyll` file in `public/` is required for GitHub Pages to serve the `_next/` directory correctly. Without it, Jekyll (the default GitHub Pages processor) ignores files and folders whose names begin with an underscore.
+</Info>
